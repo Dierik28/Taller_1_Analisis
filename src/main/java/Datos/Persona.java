@@ -1,24 +1,26 @@
 package Datos;
-
+//Se importan las librerias necesarias.
 import java.util.ArrayList;
 import java.util.List;
 
 public class Persona {
-    private int id;
-    private String nombre;
-    private String direccion;
-    private List<Telefono> telefonos;
+    //Se inicializan los atributos de la clase.
+    private int id; //Atributo que se usara para identificar a la persona.
+    private String nombre; //Nombre que se le asignara a la persona.
+    private String direccion; //Direccion que tendra la persona.
+    private List<Telefono> telefonos; //Numeros de telefono asignados a la persona.
 
+    //Constructor que solo inicializa el array de telefonos.
     public Persona(){
         this.telefonos = new ArrayList<>();
     }
-
+    //Segundo constructor que recibe el nombre y direccion de la persona.
     public Persona(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefonos = new ArrayList<>();
     }
-
+    //Tercer constructor que recibe el id, nombre y direccion de la persona.
     public Persona(int id,String nombre, String direccion){
         this.id = id;
         this.nombre = nombre;
@@ -26,6 +28,7 @@ public class Persona {
         this.telefonos = new ArrayList<>();
     }
 
+    //Getters y setters de cada atributo
     public int getId() {
         return id;
     }

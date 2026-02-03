@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="UI.PersonaController"
+            prefHeight="400" prefWidth="700">
+
+    <!-- Tabla de personas -->
+    <center>
+        <TableView fx:id="tablaPersonas">
+            <columns>
+                <TableColumn fx:id="colNombre" text="Nombre"/>
+                <TableColumn fx:id="colDireccion" text="Dirección"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </center>
+
+    <!--Vbox de telefonos -->
+    <right>
+        <VBox spacing="10" prefWidth="200">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Teléfonos" style="-fx-font-weight: bold"/>
+
+            <ListView fx:id="listaTelefonos"/>
+
+            <TextField fx:id="txtTelefono" promptText="Nuevo teléfono"/>
+
+            <Button text="Agregar Teléfono"
+                    onAction="#agregarTelefono"/>
+
+            <Button text="Eliminar Teléfono"
+                    onAction="#eliminarTelefono"/>
+        </VBox>
+    </right>
+
+    <!-- Vbox de los datos de la persona-->
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <HBox spacing="10">
+                <Label text="Nombre:" prefWidth="80"/>
+                <TextField fx:id="txtNombre" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Dirección:" prefWidth="80"/>
+                <TextField fx:id="txtDireccion" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Agregar" onAction="#agregar"/>
+                <Button text="Modificar" onAction="#modificar"/>
+                <Button text="Eliminar" onAction="#eliminar"/>
+                <Button text="Limpiar" onAction="#limpiar"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

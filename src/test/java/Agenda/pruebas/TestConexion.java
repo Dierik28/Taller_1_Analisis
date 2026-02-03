@@ -15,7 +15,7 @@ public class TestConexion {
         try (Connection conn = ConexionBD.realizarConexion()) {
 
             //Se verifica que la conexion no sea nula.
-            assertNotNull(conn, "La fallo o es nula.");
+            assertNotNull(conn, "La conexion fallo o es nula.");
             //Se verifica que la conexión esté abierta.
             assertFalse(conn.isClosed(), "La conexión se cerro.");
 

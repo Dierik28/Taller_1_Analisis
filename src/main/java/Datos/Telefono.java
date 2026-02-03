@@ -10,6 +10,10 @@ public class Telefono {
     public Telefono() {
     }
 
+    public Telefono(String telefono){
+        this.telefono = telefono;
+    }
+
     //Constructor que recibe el número de teléfono y el ID de la persona.
     public Telefono(String telefono, int personaId) {
         this.telefono = telefono;
@@ -17,7 +21,7 @@ public class Telefono {
     }
 
     //Constructor que recibe el ID del teléfono, el número y el ID de la persona.
-    public Telefono(int id, String telefono, int personaId) {
+    public Telefono(int id, int personaId , String telefono) {
         this.id = id;
         this.telefono = telefono;
         this.personaId = personaId;
@@ -47,4 +51,10 @@ public class Telefono {
     public void setPersonaId(int personaId) {
         this.personaId = personaId;
     }
+
+    @Override
+    public String toString() {
+        return telefono;
+    }
+
 }

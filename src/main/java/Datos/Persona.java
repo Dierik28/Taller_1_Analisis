@@ -9,28 +9,26 @@ public class Persona {
     //Se inicializan los atributos de la clase.
     private SimpleIntegerProperty id; //Atributo que se usara para identificar a la persona.
     private SimpleStringProperty nombre; //Nombre que se le asignara a la persona.
-    private SimpleStringProperty direccion; //Direccion que tendra la persona.
+    private List<Direccion> direcciones; //Direcciones que tendra la persona.
     private List<Telefono> telefonos; //Numeros de telefono asignados a la persona.
 
     //Constructor que solo inicializa los atributos.
     public Persona() {
         this.id = new SimpleIntegerProperty(0);
         this.nombre = new SimpleStringProperty("");
-        this.direccion = new SimpleStringProperty("");
         this.telefonos = new ArrayList<>();
+        this.direcciones = new ArrayList<>();
     }
     //Segundo constructor que recibe el nombre y direccion de la persona.
-    public Persona(String nombre, String direccion) {
+    public Persona(String nombre) {
         this();
         this.nombre.set(nombre);
-        this.direccion.set(direccion);
     }
     //Tercer constructor que recibe el id, nombre y direccion de la persona.
-    public Persona(int id, String nombre, String direccion) {
+    public Persona(int id, String nombre) {
         this();
         this.id.set(id);
         this.nombre.set(nombre);
-        this.direccion.set(direccion);
     }
 
     //Getters y setters de cada atributo
@@ -42,9 +40,6 @@ public class Persona {
         return nombre.get();
     }
 
-    public String getDireccion() {
-        return direccion.get();
-    }
 
     public List<Telefono> getTelefonos() {
         return telefonos;
@@ -56,10 +51,6 @@ public class Persona {
 
     public void setNombre(String nombre) {
         this.nombre.set(nombre);
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion.set(direccion);
     }
 
     public void setTelefonos(List<Telefono> telefonos) {
@@ -75,8 +66,20 @@ public class Persona {
         return nombre;
     }
 
-    public SimpleStringProperty direccionProperty() {
-        return direccion;
+    public List<Direccion> getDirecciones() {
+        return direcciones;
+    }
+
+    public void setDirecciones(List<Direccion> direcciones) {
+        this.direcciones = direcciones;
+    }
+
+    public void agregarDireccion(Direccion direccion) {
+        this.direcciones.add(direccion);
+    }
+
+    public void eliminarDireccion(Direccion direccion) {
+        this.direcciones.remove(direccion);
     }
 
     //Metodo para agregar un telefono a la lista de telefonos del usuario.
@@ -87,9 +90,23 @@ public class Persona {
     public void eliminarTelefono(Telefono telefono) {
         this.telefonos.remove(telefono);
     }
+
+    public String getDireccionesComoString() {
+        if (direcciones == null || direcciones.isEmpty()) {
+            return "Sin direcciones";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Direccion d : direcciones) {
+            if (sb.length() > 0) sb.append("; ");
+            sb.append(d.toString());
+        }
+        return sb.toString();
+    }
     //Metodo toString.
     @Override
     public String toString() {
-        return getNombre() + " - " + getDireccion();
+        return getNombre() + " - " + getDireccionesComoString();
     }
+
+
 }

@@ -39,18 +39,24 @@ public class TelefonoDAO {
 
     //Metodo para insertar un nuevo telefono en la base de datos.
     public void insertar(Telefono telefono) {
-        //Se realiza una consulta SQL para insertar un telefono.
         String sql = "INSERT INTO telefonos (telefono, personaId) VALUES (?, ?)";
 
         try (Connection con = ConexionBD.realizarConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, telefono.getTelefono()); //Se asigna el numero de telefono.
-            ps.setInt(2, telefono.getPersonaId()); //Se asigna el ID de la persona.
-            ps.executeUpdate(); //Se realiza la insercion del telefono.
+            ps.setString(1, telefono.getTelefono());
+            ps.setInt(2, telefono.getPersonaId());
+            ps.executeUpdate();
+
+            // Obtener el ID generado
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                telefono.setId(rs.getInt(1));
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace(); //Se maneja la excepcion en caso de error.
+            e.printStackTrace();
+            throw new RuntimeException("Error al insertar teléfono: " + e.getMessage());
         }
     }
 

@@ -7,64 +7,144 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="UI.PersonaController"
-            prefHeight="400" prefWidth="700">
+            prefHeight="500" prefWidth="800">
 
     <!-- Tabla de personas -->
     <center>
         <TableView fx:id="tablaPersonas">
             <columns>
                 <TableColumn fx:id="colNombre" text="Nombre"/>
-                <TableColumn fx:id="colDireccion" text="Dirección"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem text="Seleccionar" onAction="#seleccionarPersona"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="Eliminar" onAction="#eliminar"/>
+                    </items>
+                </ContextMenu>
+            </contextMenu>
         </TableView>
     </center>
 
-    <!--Vbox de telefonos -->
+    <!-- Panel derecho con teléfonos y direcciones -->
     <right>
-        <VBox spacing="10" prefWidth="200">
+        <VBox spacing="10" prefWidth="300">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
+            <!-- Sección Teléfonos -->
             <Label text="Teléfonos" style="-fx-font-weight: bold"/>
+            <ListView fx:id="listaTelefonos" prefHeight="150">
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem text="Eliminar Teléfono" onAction="#eliminarTelefono"/>
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
+            </ListView>
 
-            <ListView fx:id="listaTelefonos"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="txtTelefono" promptText="Número de teléfono"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="+" onAction="#agregarTelefono"/>
+            </HBox>
 
-            <TextField fx:id="txtTelefono" promptText="Nuevo teléfono"/>
+            <HBox spacing="10">
+                <Button text="Agregar Teléfono" onAction="#agregarTelefono" HBox.hgrow="ALWAYS"/>
+                <Button text="Eliminar Seleccionado" onAction="#eliminarTelefono" HBox.hgrow="ALWAYS"/>
+            </HBox>
 
-            <Button text="Agregar Teléfono"
-                    onAction="#agregarTelefono"/>
+            <Separator/>
 
-            <Button text="Eliminar Teléfono"
-                    onAction="#eliminarTelefono"/>
+            <!-- Sección Direcciones -->
+            <Label text="Direcciones" style="-fx-font-weight: bold"/>
+            <ListView fx:id="listaDirecciones" prefHeight="150">
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem text="Eliminar Dirección" onAction="#eliminarDireccion"/>
+                            <MenuItem text="Editar Dirección" onAction="#editarDireccion"/>
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
+            </ListView>
+
+            <!-- Formulario para agregar/editar direcciones -->
+            <VBox spacing="5">
+                <Label text="Nueva Dirección:" style="-fx-font-weight: bold"/>
+
+                <GridPane hgap="5" vgap="5">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="80"/>
+                        <ColumnConstraints prefWidth="200"/>
+                    </columnConstraints>
+
+                    <Label text="Calle:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtCalle" promptText="Calle"
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Ciudad:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtCiudad" promptText="Ciudad"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Código Postal:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtCodigoPostal" promptText="Código Postal"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Agregar Dirección" onAction="#agregarDireccion"
+                            fx:id="btnAgregarDireccion" prefWidth="120"/>
+                    <Button text="Limpiar Campos" onAction="#limpiarCamposDireccionUI"
+                            prefWidth="100"/>
+                </HBox>
+            </VBox>
+
+            <HBox spacing="10">
+                <Button text="Eliminar Dirección" onAction="#eliminarDireccion" HBox.hgrow="ALWAYS"/>
+            </HBox>
         </VBox>
     </right>
 
-    <!-- Vbox de los datos de la persona-->
+    <!-- Panel inferior con datos de persona -->
     <bottom>
         <VBox spacing="10">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-            <HBox spacing="10">
-                <Label text="Nombre:" prefWidth="80"/>
-                <TextField fx:id="txtNombre" HBox.hgrow="ALWAYS"/>
-            </HBox>
+            <!-- Información de la persona -->
+            <VBox spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Nombre:" prefWidth="80"/>
+                    <TextField fx:id="txtNombre" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <Label fx:id="lblIdPersona" text="ID: " style="-fx-font-style: italic;"/>
+            </VBox>
 
-            <HBox spacing="10">
-                <Label text="Dirección:" prefWidth="80"/>
-                <TextField fx:id="txtDireccion" HBox.hgrow="ALWAYS"/>
-            </HBox>
-
+            <!-- Botones principales -->
             <HBox spacing="10" alignment="CENTER">
                 <Button text="Agregar" onAction="#agregar"/>
                 <Button text="Modificar" onAction="#modificar"/>
                 <Button text="Eliminar" onAction="#eliminar"/>
                 <Button text="Limpiar" onAction="#limpiar"/>
+                <!-- Botón Recargar -->
+                <Button text="Recargar" onAction="#recargarDatos"/>
+            </HBox>
+
+            <!-- Estado del sistema -->
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Estado:" style="-fx-font-weight: bold;"/>
+                <!-- Label para estado -->
+                <Label fx:id="lblEstado" text="Listo" style="-fx-text-fill: green;"/>
+                <!-- Label para contador -->
+                <Label fx:id="lblContador" text="0 personas" style="-fx-font-style: italic;"/>
             </HBox>
         </VBox>
     </bottom>
